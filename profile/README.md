@@ -2,6 +2,38 @@
 
 2025以降の担当になった方は2025のリポジトリを参照して作ってください。
 
+## 自動デプロイ
+
+mainブランチにmerge(push)したら、レンタルサーバーに自動デプロイできるようになる
+
+以下の`.yml`ファイルをプロジェクト直下の`.github/workflow`に新しく作成してください。
+
+```yml
+name: Deploy to Sakura
+
+on:
+  push:
+    branches:
+      - main   # mainブランチにpushしたら実行
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: fest-snct.sakura.ne.jp
+          username: fest-snct
+          key: ${{ secrets.SAKURA_SSH_KEY }}
+          script: |
+            cd /home/fest-snct/www/2025    # 2025は変更して適切な年に直してください
+            git fetch origin
+            git merge origin/main
+
+```
+
 <!--
 
 **Here are some ideas to get you started:**
