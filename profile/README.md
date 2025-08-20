@@ -27,8 +27,9 @@ jobs:
           host: fest-snct.sakura.ne.jp
           username: fest-snct
           key: ${{ secrets.SAKURA_SSH_KEY }}
+          # 2025は変更して適切な年に直してください
           script: |
-            cd /home/fest-snct/www/2025    # 2025は変更して適切な年に直してください
+            cd /home/fest-snct/www/2025
             git fetch origin
             git merge origin/main
 
